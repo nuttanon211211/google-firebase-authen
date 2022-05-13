@@ -22,6 +22,7 @@ const authContextDefaultValues: authContextType = {
 };
 */
 
+// Create a context (user, login(), logout())
 const AuthContext = createContext({
   //authUser: null,
   user: null,
@@ -37,6 +38,7 @@ const AuthContext = createContext({
 //    return useContext(AuthContext);
 //}
 
+// use context
 export const useAuth = () => useContext(AuthContext);
 
 /*
@@ -49,19 +51,25 @@ export function AuthProvider({ children }) {
 //export function AuthProvider({ children }: Props) {
     //const [user, setUser] = useState<boolean>(null);
     const provider = new GoogleAuthProvider();
+    // use state
     const [user, setUser] = useState({});
 
+    // login function
+    // sign in with popup
     const login = () => {
         signInWithPopup(auth, provider)
             .then((result) => {
                 const credential = GoogleAuthProvider.credentialFromResult(result);
                 const token = credential?.accessToken;
                 //const user = setUser(result.user);
+
+                // Set user
                 const user = result.user;
                 setUser(result.user);
                 console.log({ credential, token, user });
             })
             .catch((error) => {
+                //if error occured
                 const errorCode = error.code;
                 const errorMessage = error.message;
                 const email = error.email;
@@ -70,6 +78,7 @@ export function AuthProvider({ children }) {
             });
     };
 
+    //logout function
     const logout = () => {
         auth.signOut();
         console.log("logout");
@@ -77,6 +86,7 @@ export function AuthProvider({ children }) {
 
 
     //const value = {user,login,logout,};
+    // values for value in authcontext provider
     const values = {user,login,logout};
     /*
     return (

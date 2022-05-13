@@ -5,8 +5,12 @@ import { useAuth } from "../context/AuthContext";
 
 // <
 
+// Frondend
 export default function Home() {
+  // Import user, login, logout from context
   const { user, login, logout } = useAuth();
+
+  // Simple webpage that have a login and logout button
   return (
 
 
